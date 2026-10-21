@@ -142,7 +142,12 @@
 
       <!-- 路徑 -->
       <path id="routePath" class="route" d="M 101 100 L 101 128 L 196 128 L 196 176 L 262 176 L 262 210"
-            fill="none" stroke="#4ec5f0" stroke-width="5" stroke-linecap="round" opacity="0"/>
+            fill="none" stroke="#4ec5f0" stroke-width="6" stroke-linecap="round" marker-end="url(#arrow)" opacity="0"/>
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="#4ec5f0"/>
+        </marker>
+      </defs>
 
       <!-- 你現在的位置（W6 修改：標「你」＋箭頭） -->
       <g id="youMarker">
@@ -225,8 +230,11 @@
   function toggleRoute(){
     routeOn = !routeOn;
     const p = document.getElementById('routePath');
-    p.style.opacity = routeOn ? 1 : 0;
+    p.setAttribute('opacity', routeOn ? '1' : '0');
     document.querySelector('.ghost').textContent = routeOn ? '隱藏路徑' : '顯示完整路徑';
+    if (routeOn) {
+      document.querySelector('.mapwrap').scrollIntoView({behavior:'smooth', block:'center'});
+    }
   }
   const TITLES = {
     D:   ['到 D 棟：4 個轉折', '看到號碼牌就是到了 — 不用再問第二次。'],
