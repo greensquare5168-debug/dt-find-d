@@ -177,7 +177,7 @@
 
   <div class="cta">
     <button class="ghost" onclick="toggleRoute()">顯示完整路徑</button>
-    <button class="primary" onclick="openVolunteer()">我到了</button>
+    <button class="primary" onclick="openVolunteer()">找志工幫忙</button>
   </div>
 
   <footer>
@@ -228,15 +228,20 @@
     p.style.opacity = routeOn ? 1 : 0;
     document.querySelector('.ghost').textContent = routeOn ? '隱藏路徑' : '顯示完整路徑';
   }
+  const TITLES = {
+    D:   ['到 D 棟：4 個轉折', '看到號碼牌就是到了 — 不用再問第二次。'],
+    A:   ['到 A 棟：從你現在的位置往回走', 'A 棟就在你左手邊，門口有教務處櫃檯。'],
+    C:   ['到 C 棟：直走再左轉', '沿中央大道直走，看到噴水池後繼續走，C 棟在左手邊。'],
+    Pool:['到噴水池：直走就到', '沿中央大道直走約 30 公尺，正前方就是噴水池。']
+  };
   function pick(el, key){
     document.querySelectorAll('.pill').forEach(b=>b.classList.remove('on'));
     el.classList.add('on');
-    if(key !== 'D'){
-      document.querySelector('.sheet h2:nth-of-type(2)').textContent =
-        '到 ' + (key==='Pool'?'噴水池':key+' 棟') + '：先沿中央大道直走';
-    } else {
-      document.querySelector('.sheet h2:nth-of-type(2)').textContent = '到 D 棟：4 個轉折';
-    }
+    const [t, s] = TITLES[key];
+    const hs = document.querySelectorAll('.sheet h2');
+    hs[1].textContent = t;
+    document.querySelectorAll('.sheet .sub')[1].textContent = s;
+    document.querySelector('.steps').style.opacity = (key === 'D') ? 1 : 0.35;
   }
 </script>
 </body>
